@@ -1,0 +1,7 @@
+{
+    "curve_definition_file": "curves.csv",
+    "scenario_definition_file": "scenarios.csv",
+    "security_definition_file": "securities.csv",
+    "use_case": "NPV_CALCULATION",
+    "output_file": "results.csv"
+}
