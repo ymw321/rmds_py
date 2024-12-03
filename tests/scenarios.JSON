@@ -1,0 +1,6 @@
+{
+    "IR_risk_factors": ["2y", "3y", "5y", "7y", "10y", "20y", "30y"],
+    "scenario_grid": {
+        "BASE": [0, 0, 0, 0, 0, 0, 0]
+    }
+}
