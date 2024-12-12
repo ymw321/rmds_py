@@ -2,7 +2,7 @@
     "valuation_date": "2024-06-30",
     "curve_definition_file": "curves.csv",
     "scenario_definition_file": "scenarios.csv",
-    "security_definition_file": "securities.csv",
+    "security_definition_file": "securities.tsv",
     "use_case": "NPV_CALCULATION",
     "output_file": "results.csv"
 }
