@@ -12,11 +12,16 @@ class Security(ABC):
     def __init__(self, security_id: str, attributes: Dict[str, Union[str, float, int]]):
         self.security_id = security_id
         self.attributes = attributes
+        self.val_date: date = None
         self.setup_security()
 
     @abstractmethod
     def setup_security(self):
         pass
+
+    @abstractmethod
+    def schedule_cashflows(self, val_date: date):
+        self.val_date = val_date
 
     @abstractmethod
     def NPV(self, scenario: Scenario) -> float:
@@ -29,6 +34,10 @@ class Bond(Security):
         super().__init__(security_id, attributes)
 
     def setup_security(self):
+        pass
+
+    def schedule_cashflows(self, val_date):
+        super().schedule_cashflows(val_date)
         self.cashflow_dates = [1, 5, 7]
         self.cashflor_values = [100,120,100100]
 
@@ -65,6 +74,7 @@ class SecurityManager:
     """Singleton class managing securities."""
     _instance = None
     securities: Dict[str, Security] = {}
+    valuation_date: date = None
 
     def __new__(cls):
         if cls._instance is None:
@@ -72,7 +82,11 @@ class SecurityManager:
         return cls._instance
 
     def set_valuation_date(self, valuation_date: date):
-        self.valuation_date = valuation_date
+        if valuation_date != self.valuation_date:
+            self.valuation_date = valuation_date
+            for id, sec in self.securities.items():
+                sec.schedule_cashflows(valuation_date)
+                logger.info(f'Security {id} cashflows are scheduled')
 
     def add_security(self, security: Security):
         self.securities[security.security_id] = security
@@ -146,7 +160,6 @@ if __name__ == "__main__":
     secMgr.set_valuation_date(val_date)
 
     secs = secMgr.securities
-
     scenarios = scenMgr.scenarios
     for id, sec in secs.items():
         print(id) 
