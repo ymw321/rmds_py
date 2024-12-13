@@ -6,7 +6,7 @@ logger = logging.getLogger('app_logger')
 logger.setLevel(logging.INFO)
 
 # Create handlers
-log_file_path = os.path.join('./', 'armds.log')
+log_file_path = os.path.join('./', 'rmds.log')
 file_handler = logging.FileHandler(log_file_path)
 file_handler.setLevel(logging.INFO)
 

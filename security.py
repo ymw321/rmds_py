@@ -142,8 +142,8 @@ class SecurityManager:
 # Example usage:
 if __name__ == "__main__":
     # Path to the curve file
-    crv_file = "C:/dev/Python/rmds/tests/curves.csv"
-    sec_file = "C:/dev/Python/rmds/tests/securities.tsv"
+    crv_file = "./tests/curves.csv"
+    sec_file = "./tests/securities.tsv"
     val_date = date(2020, 12, 30)
     
     # Initialize and run the CurveManager

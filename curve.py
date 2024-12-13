@@ -141,7 +141,7 @@ class CurveManager:
 # Example usage:
 if __name__ == "__main__":
     # Path to the curve file
-    config_file = "C:/dev/Python/rmds/tests/curves.csv"
+    config_file = "./tests/curves.csv"
     
     # Initialize and run the CurveManager
     manager = CurveManager()
