@@ -1,7 +1,7 @@
 from typing import Dict, Union, List, Optional, Tuple
 import numpy as np
 from logger_config import logger
-from datetime import datetime, date, timedelta
+from datetime import date, timedelta
 from abc import ABC, abstractmethod
 from scipy.interpolate import interp1d
 import csv
@@ -16,21 +16,21 @@ class Curve:
         self.date = crv_date
 
     @abstractmethod
-    def _get_value(self, date: int) -> float:
+    def _get_value(self, a_date: int) -> float:
         pass
 
-    def get_value(self, date) -> float:
-        if isinstance(date, datetime):
-            return self._get_value_by_date(date)
-        elif isinstance(date, int):
-            return self._get_value(date)
+    def get_value(self, a_date) -> float:
+        if isinstance(a_date, date):
+            return self._get_value_by_date(a_date)
+        elif isinstance(a_date, int):
+            return self._get_value(a_date)
         else:
             raise TypeError("date must be a date object or an integer")
 
     # transform date to daycount based on Curve's daycount convention
-    def _get_value_by_date(self, date: datetime) -> float:
+    def _get_value_by_date(self, a_date: date) -> float:
         #assuming ACT/ACT for now
-        days = (date - self.date).days()
+        days = (a_date - self.date).days()
         return self._get_value(days)
 
 class SimpleCurve(Curve):

@@ -1,6 +1,6 @@
 from typing import Dict, Union, List, Optional, Tuple
 from logger_config import logger
-from datetime import datetime, date
+from datetime import date
 from abc import ABC, abstractmethod
 from scipy.interpolate import interp1d
 import csv
@@ -24,7 +24,7 @@ class Security(ABC):
         self.val_date = val_date
 
     @abstractmethod
-    def NPV(self, scenario: Scenario) -> float:
+    def NPV(self, curves: Dict[Tuple[str,date],Curve]) -> float:
         pass
 
 
@@ -41,17 +41,16 @@ class Bond(Security):
         self.cashflow_dates = [1, 5, 7]
         self.cashflor_values = [100,120,100100]
 
-    def NPV(self, scenario: Scenario) -> float:
+    def NPV(self, curves: Dict[Tuple[str,date],Curve]) -> float:
         curve_name = self.attributes["DiscountCurve"]
-        val_date = scenario.date
-        base_curve = scenario.base_curves.get((curve_name, val_date))
+        disc_curve = curves.get((curve_name, self.val_date))
 
-        if not base_curve:
+        if not disc_curve:
             raise ValueError(f"Curve {curve_name} of date {val_date} not found in scenario.")
 
         npv = 0.0
         for i in range(0,2):
-            discount_factor = base_curve.get_value(self.cashflow_dates[i])
+            discount_factor = disc_curve.get_value(self.cashflow_dates[i])
             npv += self.cashflor_values[i] * discount_factor
         return npv
 

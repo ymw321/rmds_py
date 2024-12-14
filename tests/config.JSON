@@ -1,5 +1,5 @@
 {
-    "valuation_date": "2024-06-30",
+    "valuation_date": "2020-12-30",
     "curve_definition_file": "curves.csv",
     "scenario_definition_file": "scenarios.csv",
     "security_definition_file": "securities.tsv",

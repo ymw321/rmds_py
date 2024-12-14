@@ -1,6 +1,6 @@
 from typing import Dict, Union, List, Optional, Tuple
 from logger_config import logger
-from datetime import datetime, date
+from datetime import date
 from abc import ABC, abstractmethod
 from scipy.interpolate import interp1d
 import csv
@@ -8,9 +8,9 @@ from curve import Curve, CurveManager, SimpleCurve
 
 class Scenario:
     """Class representing a market scenario with BASE, UP, and DOWN perturbed curves."""
-    def __init__(self, name: str, adate: date, base_curves: Dict[Tuple[str,date], Curve]):
+    def __init__(self, name: str, a_date: date, base_curves: Dict[Tuple[str,date], Curve]):
         self.name = name
-        self.date = adate
+        self.date = a_date
         self.base_curves = base_curves
         self.up_curves: Dict[Tuple[str, date], Curve] = {}
         self.down_curves: Dict[Tuple[str, date], Curve] = {}
