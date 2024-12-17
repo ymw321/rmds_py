@@ -3,12 +3,16 @@ from logger_config import logger
 from datetime import date
 from abc import ABC, abstractmethod
 from scipy.interpolate import interp1d
-import csv
-from curve import CurveManager, Curve
-from scenario import ScenarioManager, Scenario
-from security import SecurityManager, Security
 import pandas as pd
 import json as json
+
+import curve as crv #import CurveManager, Curve
+CurveManager = crv.CurveManager
+import scenario as scen
+ScenarioManager = scen.ScenarioManager
+import sec_mgr  
+SecurityManager = sec_mgr.SecurityManager
+
 
 # Generic Calculation Function
 def gen_rmds(sec_mgr: SecurityManager, scen_mgr: ScenarioManager) -> pd.DataFrame:

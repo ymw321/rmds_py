@@ -1,73 +1,16 @@
-from typing import Dict, Union, List, Optional, Tuple
+from typing import Dict, Union, List, Optional, Tuple, NewType
 from logger_config import logger
 from datetime import date
 from abc import ABC, abstractmethod
 from scipy.interpolate import interp1d
 import csv
-from curve import Curve, CurveManager, SimpleCurve
-from scenario import Scenario, ScenarioManager
 
-class Security(ABC):
-    """Abstract class for a financial security."""
-    def __init__(self, security_id: str, attributes: Dict[str, Union[str, float, int]]):
-        self.security_id = security_id
-        self.attributes = attributes
-        self.val_date: date = None
-        self.setup_security()
+import securities as sec
+Security = sec.Security
+#from securities.security import Security
+#from securities.bond import Bond, Equity
 
-    @abstractmethod
-    def setup_security(self):
-        pass
-
-    @abstractmethod
-    def schedule_cashflows(self, val_date: date):
-        self.val_date = val_date
-
-    @abstractmethod
-    def NPV(self, curves: Dict[Tuple[str,date],Curve]) -> float:
-        pass
-
-
-class Bond(Security):
-    """A simple bond implementation."""
-    def __init__(self, security_id, attributes):
-        super().__init__(security_id, attributes)
-
-    def setup_security(self):
-        pass
-
-    def schedule_cashflows(self, val_date):
-        super().schedule_cashflows(val_date)
-        self.cashflow_dates = [1, 5, 7]
-        self.cashflor_values = [100,120,100100]
-
-    def NPV(self, curves: Dict[Tuple[str,date],Curve]) -> float:
-        curve_name = self.attributes["DiscountCurve"]
-        disc_curve = curves.get((curve_name, self.val_date))
-
-        if not disc_curve:
-            raise ValueError(f"Curve {curve_name} of date {val_date} not found in scenario.")
-
-        npv = 0.0
-        for i in range(0,2):
-            discount_factor = disc_curve.get_value(self.cashflow_dates[i])
-            npv += self.cashflor_values[i] * discount_factor
-        return npv
-
-class Equity(Security):
-    def __init__(self, security_id, attributes):
-        super().__init__(security_id, attributes)
-
-    def setup_security(self):
-        pass
-
-    def NPV(self, scenario: Scenario) -> float:
-        # Implement equity-specific NPV calculation
-        npv = 0
-        for curve_name, curve in scenario.base_curves.items():
-            # Custom logic for NPV calculation for equities
-            npv += sum(curve.values)  # Simplified example
-        return npv
+Attributes = Dict[str, Union[str,float,int]]
 
 class SecurityManager:
     """Singleton class managing securities."""
@@ -91,14 +34,14 @@ class SecurityManager:
         self.securities[security.security_id] = security
         logger.info(f"Added security: {security.security_id}")
 
-    def construct_and_add_security(self, attributes: dict) -> int:
+    def construct_and_add_security(self, attributes: Attributes) -> int:
         security_type = attributes.pop("SecType", None)
         security_id = attributes.get("SecId")
 
         if security_type == "Bond":
-            security = Bond(security_id, attributes)
+            security = sec.Bond(security_id, attributes)
         elif security_type == "equity":
-            security = Equity(security_id, attributes)
+            security = sec.Equity(security_id, attributes)
         else:
             logger.error(f"Unknown security type: {security_type}")
             return -1
@@ -146,10 +89,12 @@ if __name__ == "__main__":
     val_date = date(2020, 12, 30)
     
     # Initialize and run the CurveManager
+    from curve import CurveManager
     manager = CurveManager()
     manager.set_valuation_date(val_date)
     manager.load_curves(crv_file)
 
+    from scenario import ScenarioManager
     scenMgr = ScenarioManager()
     scenMgr.set_valuation_date(val_date)
     scenMgr.load_scenarios(crv_file)    #note this version of scenMgr does not really load anything
@@ -169,5 +114,5 @@ if __name__ == "__main__":
             dns = scen.down_curves
             print(f'These are curves contained in scenario ' + key.__str__() + ':\n')
             print(bases.keys())
-            print(sec.NPV(scen))
+            print(sec.NPV(bases))
                 

@@ -1,4 +1,4 @@
-from typing import Dict, Union, List, Optional, Tuple
+from typing import Dict, Union, List, Optional, Tuple, Callable
 import numpy as np
 from logger_config import logger
 from datetime import date, timedelta
@@ -7,8 +7,24 @@ from scipy.interpolate import interp1d
 import csv
 import bisect
 
+Attributes = Dict[str, Union[str,float,int]]
+
 # Abstract Classes and Singleton Managers
 class Curve:
+    class Instrument:
+        """Class representing an interest rate instrument."""
+        def __init__(self, start_date: date, maturity: date, market_value: float, attributes: Attributes):
+            """
+            Parameters:
+                maturity (datetime): The maturity date of the instrument.
+                market_value (float): The quoted market value of the instrument.
+                pricing_function (Callable): A function to calculate the instrument's theoretical value given a curve.
+            """
+            self.start_date = start_date
+            self.maturity = maturity
+            self.market_value = market_value
+            self.attributes = attributes
+
     """Abstract base class for a curve."""
     # concrete method to initialize meta data for the curve
     def __init__(self, crv_name: str, crv_date:date):
