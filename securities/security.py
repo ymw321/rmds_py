@@ -9,9 +9,10 @@ CrvVector = Dict[Tuple[str,date],Curve]
 
 class Security(ABC):
     """Abstract class for a financial security."""
-    def __init__(self, security_id: str, attributes: Dict[str, Union[str, float, int]]):
-        self.security_id = security_id
+    def __init__(self, attributes: Dict[str, Union[str, float, int]]):
+        self.security_id = attributes["SecId"]
         self.attributes = attributes
+        self.type = "Security"
         self.val_date: date = None
         self.setup_security()
 

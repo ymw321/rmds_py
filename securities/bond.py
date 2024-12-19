@@ -7,8 +7,9 @@ from .security import Security
 
 class Bond(Security):
     """A simple bond implementation."""
-    def __init__(self, security_id, attributes):
-        super().__init__(security_id, attributes)
+    def __init__(self, attributes):
+        super().__init__(attributes)
+        self.type = "Bond"
         logger.info(Bond)
 
     def setup_security(self):
@@ -33,15 +34,19 @@ class Bond(Security):
         return npv
     
     def __str__(self):
-        return f"Bond Id={self.attributes['SecId']} with maturity={self.attributes['Maturity']} and coupon={self.attributes['CpnRate']} instantiated"
+        return f"Bond Id={self.security_id} with maturity={self.attributes['MaturityDate']} and coupon={self.attributes['CouponRate']}"
 
 class Equity(Security):
-    def __init__(self, security_id, attributes):
-        super().__init__(security_id, attributes)
+    def __init__(self, attributes):
+        super().__init__(attributes)
+        self.type = "Equity"
         logger.info(Equity)
 
     def setup_security(self):
         pass
+
+    def schedule_cashflows(self, val_date):
+        super().schedule_cashflows(val_date)
 
     def NPV(self, curves: Dict[Tuple[str,date],Curve]) -> float:
         # Implement equity-specific NPV calculation
@@ -52,4 +57,4 @@ class Equity(Security):
         return npv
     
     def __str__(self):
-        return f"Equity Id={self.attributes['SecId']} instantiated"
+        return f"Equity Id={self.security_id}"

@@ -9,12 +9,15 @@ logger = logging.getLogger('app_logger')
 logger.setLevel(logging.INFO)
 
 # Create handlers
-log_file_path = Path('./', 'rmds.log')
+log_file_path = Path('./Tests/', 'rmds.log')
+if log_file_path.exists(): log_file_path.unlink()
+
 # if it already exists, archive it
-if log_file_path.exists():
+""" if log_file_path.exists():
     log_file_path.rename(log_file_path.stem 
                          + datetime.now().strftime("%Y%m%d.%H%M%S")
                          + ".log")
+"""
 # file_handler will initiate a new log file
 file_handler = logging.FileHandler(log_file_path)
 file_handler.setLevel(logging.INFO)

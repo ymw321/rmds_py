@@ -10,6 +10,8 @@ Security = sec.Security
 #from securities.security import Security
 #from securities.bond import Bond, Equity
 
+from sec_factory import sec_factory
+
 Attributes = Dict[str, Union[str,float,int]]
 
 class SecurityManager:
@@ -38,17 +40,14 @@ class SecurityManager:
         security_type = attributes.pop("SecType", None)
         security_id = attributes.get("SecId")
 
-        if security_type == "Bond":
-            security = sec.Bond(security_id, attributes)
-        elif security_type == "equity":
-            security = sec.Equity(security_id, attributes)
-        else:
-            logger.error(f"Unknown security type: {security_type}")
+        try:
+            security = sec_factory(security_type, attributes)
+            self.add_security(security)
+            logger.info(f"Constructed and added security of type {security_type}: {security_id}: {security}")
+            return 0
+        except Exception as e:
+            logger.info(f"Failed instantiating Security {security_type}: {security_id}. Error returned from sec_factory: {e}")
             return -1
-
-        self.add_security(security)
-        logger.info(f"Constructed and added security of type {security_type}: {security_id}")
-        return 0
 
     def read_securities_from_tsv(self, file_path):
         cnt1 = int(0)
