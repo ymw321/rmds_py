@@ -85,6 +85,7 @@ if __name__ == "__main__":
     # Path to the curve file
     crv_file = "./tests/curves.csv"
     sec_file = "./tests/securities.tsv"
+    scen_file = "./tests/scenarios.JSON"
     val_date = date(2020, 12, 30)
     
     # Initialize and run the CurveManager
@@ -96,7 +97,7 @@ if __name__ == "__main__":
     from scenario import ScenarioManager
     scenMgr = ScenarioManager()
     scenMgr.set_valuation_date(val_date)
-    scenMgr.load_scenarios(crv_file)    #note this version of scenMgr does not really load anything
+    scenMgr.load_scenarios(scen_file)    #note this version of scenMgr does not really load anything
 
     secMgr = SecurityManager()
     secMgr.load_securities(sec_file)

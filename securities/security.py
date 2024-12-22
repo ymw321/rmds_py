@@ -1,4 +1,4 @@
-from typing import Dict, Union, Tuple, NewType
+from typing import Dict, Union, Tuple, NewType, List
 from datetime import date
 from abc import ABC, abstractmethod
 
@@ -15,6 +15,11 @@ class Security(ABC):
         self.type = "Security"
         self.val_date: date = None
         self.setup_security()
+
+    @abstractmethod
+    # each security must provide a list of curve names as market context 
+    def require_curves(self) -> List[str]:
+        pass
 
     @abstractmethod
     def setup_security(self):

@@ -1,6 +1,12 @@
 {
     "IR_risk_factors": ["2y", "3y", "5y", "7y", "10y", "20y", "30y"],
+    "EQ_risk_factors": ["SP500", "QQQ", "TSX"],
+    "IR_perturb_bps": 10,
+    "EQ_perturb_percent": 0.1,
+    "All_risk_factors": ["2y", "3y", "5y", "7y", "10y", "20y", "30y", "SP500", "QQQ", "TSX"],
     "scenario_grid": {
-        "BASE": [0, 0, 0, 0, 0, 0, 0]
+        "BASE": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "UP_10bp": [10, 10, 10, 10, 10, 10, 10, 1, 1, 1],
+        "DN_10bp": [-10, -10, -10, -10, -10, -10, -10, -1, -1, -1]
     }
 }
