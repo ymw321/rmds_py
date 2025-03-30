@@ -4,10 +4,10 @@ from datetime import date
 from abc import ABC, abstractmethod
 from scipy.interpolate import interp1d
 import json as json
-import csv
-import curve as crv
+
+import curves as crv
 Curve = crv.Curve
-CurveManager = crv.CurveManager
+from curve_mgr import CurveManager
 ZeroCurve = crv.ZeroCurve
 SimpleCurve = crv.SimpleCurve
 
@@ -83,6 +83,7 @@ class ScenarioManager:
 if __name__ == "__main__":
     # Path to the curve file
     crv_file = "./tests/curves.csv"
+    scen_file = "./tests/scenarios.json"
     val_date = date(2020, 12, 30)
     
     # Initialize and run the CurveManager
@@ -92,7 +93,7 @@ if __name__ == "__main__":
 
     scenMgr = ScenarioManager()
     scenMgr.set_valuation_date(val_date)
-    scenMgr.load_scenarios(crv_file)    #note this version of scenMgr does not really load anything
+    scenMgr.load_scenarios(scen_file)    #note this version of scenMgr does not really load anything
 
     scenarios = scenMgr.scenarios
     for key, scen in scenarios.items():
@@ -104,6 +105,6 @@ if __name__ == "__main__":
         for crv_key, crv in bases.items():
             print(crv_key)
             print(crv)
-            print(crv.get_value(150))
+            print(crv.get_df(150))
 
 

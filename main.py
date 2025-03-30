@@ -6,8 +6,7 @@ from scipy.interpolate import interp1d
 import pandas as pd
 import json as json
 
-import curve as crv #import CurveManager, Curve
-CurveManager = crv.CurveManager
+from curve_mgr import CurveManager
 import scenario as scen
 ScenarioManager = scen.ScenarioManager
 import sec_mgr  

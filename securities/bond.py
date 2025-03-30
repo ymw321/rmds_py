@@ -8,8 +8,9 @@ sys.path.insert(0, parent_dir)
 from typing import Dict, Tuple, List
 from logger_config import logger
 from datetime import date
-import curve as crv
-from curve import Curve
+
+import curves as crv
+Curve = crv.Curve
 from .security import Security
 
 class Bond(Security):

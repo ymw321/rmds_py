@@ -89,7 +89,7 @@ if __name__ == "__main__":
     val_date = date(2020, 12, 30)
     
     # Initialize and run the CurveManager
-    from curve import CurveManager
+    from curve_mgr import CurveManager
     manager = CurveManager()
     manager.set_valuation_date(val_date)
     manager.load_curves(crv_file)

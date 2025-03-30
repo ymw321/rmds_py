@@ -1,0 +1,16 @@
+Current status (Date: 2025-03-30)
+	The core structure done with CurveManager, ScenarioManager, SecurityManager and TaskDispatcher
+	- only the basic bond as instrument
+	- only SimpleCurve is defined and loadable: to add a generic instrument loader
+	
+TODO
+	next milestone 1: collect curve related codes into a curve folder?
+	
+	next milestone 2: bootstrap a basic swap curve with Cashlike and IR Swaps
+	1. add Cashlike, swap legs, and swaps for which implement cashflows and indexes
+	2. add holiday schedules
+	3. add scheduler
+	4. add swaps and Cashlike to a curve definition and create the generic instrument loader 
+	
+	
+	
