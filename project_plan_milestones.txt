@@ -5,10 +5,14 @@ Current status (Date: 2025-03-30)
 	
 TODO
 	next milestone 1: collect curve related codes into a curve folder?
+	done:
+		1. keep CurveManager in the root folder but move all curve classes to the curves folder
+	todo:
+		2. add Cashlike, swap legs, and swaps for which implement cashflows and indexes
+		3. add holiday schedules, but only use its basic functions so Cashlike and Swap can be stub-implemented. 
+		4. how to connect curve instrument to underlying securities? Add Cashlike and Swap instruments to experiment
 	
 	next milestone 2: bootstrap a basic swap curve with Cashlike and IR Swaps
-	1. add Cashlike, swap legs, and swaps for which implement cashflows and indexes
-	2. add holiday schedules
 	3. add scheduler
 	4. add swaps and Cashlike to a curve definition and create the generic instrument loader 
 	
